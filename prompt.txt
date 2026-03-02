@@ -1,0 +1,15 @@
+Using python 
+
+Read amazon.html and parse it with beautifulsoup
+
+find all
+div class="sg-col-inner"
+
+for all the div
+
+try find with class="a-size-medium a-spacing-none a-color-base a-text-normal" and store with name
+expect name = ""
+try find span with class="a-price-whole" and store with price
+expect price = ""
+
+open an excel file and write name and price in it

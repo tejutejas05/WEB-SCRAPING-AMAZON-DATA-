@@ -1,5 +1,0 @@
-div class="sg-col-inner"
-
-class="a-size-medium a-spacing-none a-color-base a-text-normal"
-
-span class="a-price-whole"
