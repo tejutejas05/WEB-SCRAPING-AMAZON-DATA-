@@ -8,7 +8,7 @@ with open("amazon.html", "r", encoding="utf-8") as file:
 products = []
 
 # Find all divs with class sg-col-inner
-divs = soup.find_all("div", class_="sg-col-inner")
+divs = soup.find_all("div", class_="a-section")
 
 for div in divs:
     name = ""
@@ -32,6 +32,6 @@ for div in divs:
 df = pd.DataFrame(products, columns=["Product Name", "Price"])
 
 # Save to Excel
-df.to_excel("amazon_products.xlsx", index=False)
+df.to_excel("amazon_products1.xlsx", index=False)
 
 print("✅ Data saved to amazon_products.xlsx")
