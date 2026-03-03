@@ -3,20 +3,22 @@ from bs4 import BeautifulSoup
 
 url = "https://realpython.github.io/fake-jobs/"
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/120.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9",
-    "Connection": "keep-alive"
-}
+response = requests.get(url)
+soup = BeautifulSoup(response.text,"html.parser")
 
-response = requests.get(url, headers=headers)
+jobs = soup.find_all("div",class_="card-content")
 
-print("Status Code:", response.status_code)
+print("total jobs found: ", len(jobs))
 
-soup = BeautifulSoup(response.text, "html.parser")
+for job in jobs:
+    title = job.find("h2",class_="title").text.strip()
+    company = job.find("h3",class_="company").text.strip()
+    loction = job.find("p",class_="location").text.strip()
 
-print(soup.title.text)
+    print("title:", title)
+    print("company:", company)
+    print("Loction:", loction)
+    print("-" * 40)
+
+
+
