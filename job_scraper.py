@@ -9,6 +9,7 @@ soup = BeautifulSoup(response.text,"html.parser")
 jobs = soup.find_all("div",class_="card-content")
 
 print("total jobs found: ", len(jobs))
+print("=" * 50)
 
 for job in jobs:
     title = job.find("h2",class_="title").text.strip()
