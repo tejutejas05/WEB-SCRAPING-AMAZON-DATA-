@@ -13,3 +13,6 @@ try find span with class="a-price-whole" and store with price
 expect price = ""
 
 open an excel file and write name and price in it
+
+
+div class="puis-card-container s-card-container s-overflow-hidden aok-relative desktop-list-view puis-include-content-margin puis puis-v12vwbuqe0094v2cl07aigxp21v s-latency-cf-section puis-card-border" data-cy="asin-faceout-container"><div class="a-section"
