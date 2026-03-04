@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask import request
 import requests
 from bs4 import BeautifulSoup
 
@@ -35,6 +36,12 @@ def scrape_jobs():
 @app.route("/jobs", methods=["GET"])
 def get_jobs():
     jobs = scrape_jobs()
+
+    keyword = request.args.get("keyword")
+
+    if keyword:
+        jobs = [job for job in jobs if keyword.lower() in job["title"].lower()]
+
     return jsonify(jobs)
 
 
