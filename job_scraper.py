@@ -16,10 +16,14 @@ for job in jobs:
     company = job.find("h3",class_="company").text.strip()
     loction = job.find("p",class_="location").text.strip()
 
+    link_tag = job.find("a",string="Apply")
+    link = link_tag["href"] if link_tag else "No Link"
+
     print("title:", title)
     print("company:", company)
     print("Loction:", loction)
-    print("-" * 40)
+    print("Apply Link: ", link)
+    print("-" * 50)
 
 
 
