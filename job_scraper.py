@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import csv
+import pandas as pd
 
 
 url = "https://realpython.github.io/fake-jobs/"
@@ -40,10 +41,19 @@ for job in jobs:
     #    json.dump(job_list, f, indent=4)
 
     #below code will be of csv
-    with open("jobs.csv", "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames = ["title" , "company" , "location" , "link"])
-        writer.writeheader()
-        writer.writerows(job_list)
+    #with open("jobs.csv", "w", newline="", encoding="utf-8") as f:
+    #    writer = csv.DictWriter(f, fieldnames = ["title" , "company" , "location" , "link"])
+    #    writer.writeheader()
+    #    writer.writerows(job_list)
+
+
+# Now lets save this in the excel file
+
+df = pd.DataFrame(job_list)
+df.to_excel("jobs.xlsx", index=False)
+
+print("saved as jobs.xlsx")
+
 
 print("saved as jobs.csv file")
 
