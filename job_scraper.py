@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import csv
 
 
 url = "https://realpython.github.io/fake-jobs/"
@@ -32,8 +33,19 @@ for job in jobs:
 
     job_list.append(job_data)
 
-    with open("jobs.json" , "w", encoding="utf-8") as f:
-        json.dump(job_list, f, indent=4)
+
+    # this formart will be of json code 
+
+    #with open("jobs.json" , "w", encoding="utf-8") as f:
+    #    json.dump(job_list, f, indent=4)
+
+    #below code will be of csv
+    with open("jobs.csv", "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames = ["title" , "company" , "location" , "link"])
+        writer.writeheader()
+        writer.writerows(job_list)
+
+print("saved as jobs.csv file")
 
 print("saved as jobs.json")
 
