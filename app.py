@@ -2,8 +2,10 @@ from flask import Flask, jsonify
 from flask import request
 import requests
 from bs4 import BeautifulSoup
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 def scrape_jobs():
     url = "https://realpython.github.io/fake-jobs/"

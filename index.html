@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Search Portal</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .job-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        button { padding: 8px 15px; }
+    </style>
+</head>
+<body>
+
+<h2>Job Search Portal 🚀</h2>
+
+<input type="text" id="keyword" placeholder="Enter keyword (e.g. python)">
+<button onclick="searchJobs()">Search</button>
+
+<div id="results"></div>
+
+<script>
+async function searchJobs() {
+    const keyword = document.getElementById("keyword").value;
+    const response = await fetch(`http://127.0.0.1:5000/jobs?keyword=${keyword}`);
+    const jobs = await response.json();
+
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    jobs.forEach(job => {
+        resultsDiv.innerHTML += `
+            <div class="job-card">
+                <h3>${job.title}</h3>
+                <p><strong>Company:</strong> ${job.company}</p>
+                <p><strong>Location:</strong> ${job.location}</p>
+                <a href="${job.link}" target="_blank">Apply</a>
+            </div>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>
