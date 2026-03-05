@@ -1,47 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Job Search Portal</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        .job-card {
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-        }
-        button { padding: 8px 15px; }
-    </style>
+<meta charset="UTF-8">
+<title>Job Search Portal</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f4f6f8;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+color:#333;
+}
+
+.search-box{
+text-align:center;
+margin-bottom:30px;
+}
+
+input{
+padding:10px;
+width:250px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#007bff;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+.job-card{
+background:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.job-title{
+font-size:20px;
+font-weight:bold;
+}
+
+.apply-link{
+display:inline-block;
+margin-top:10px;
+text-decoration:none;
+color:white;
+background:green;
+padding:6px 12px;
+border-radius:4px;
+}
+
+.loading{
+text-align:center;
+font-size:18px;
+color:#555;
+}
+
+</style>
 </head>
+
 <body>
 
-<h2>Job Search Portal </h2>
+<div class="container">
 
-<input type="text" id="keyword" placeholder="Enter keyword (e.g. python)">
+<h1>Job Search Portal 🚀</h1>
+
+<div class="search-box">
+<input type="text" id="keyword" placeholder="Search jobs (python, engineer)">
 <button onclick="searchJobs()">Search</button>
+</div>
 
-<div id="results"></div>
+<div id="loading" class="loading"></div>
+
+<div id="jobs"></div>
+
+</div>
 
 <script>
-async function searchJobs() {
-    const keyword = document.getElementById("keyword").value;
-    const response = await fetch(`http://127.0.0.1:5000/jobs?keyword=${keyword}`);
-    const jobs = await response.json();
 
-    const resultsDiv = document.getElementById("results");
-    resultsDiv.innerHTML = "";
+async function searchJobs(){
 
-    jobs.forEach(job => {
-        resultsDiv.innerHTML += `
-            <div class="job-card">
-                <h3>${job.title}</h3>
-                <p><strong>Company:</strong> ${job.company}</p>
-                <p><strong>Location:</strong> ${job.location}</p>
-                <a href="${job.link}" target="_blank">Apply</a>
-            </div>
-        `;
-    });
+const keyword = document.getElementById("keyword").value
+const jobsDiv = document.getElementById("jobs")
+const loading = document.getElementById("loading")
+
+jobsDiv.innerHTML=""
+loading.innerHTML="Loading jobs..."
+
+try{
+
+const response = await fetch(`http://127.0.0.1:5000/jobs?keyword=${keyword}`)
+const data = await response.json()
+
+loading.innerHTML=""
+
+if(data.length === 0){
+jobsDiv.innerHTML="<p>No jobs found</p>"
+return
 }
+
+data.forEach(job => {
+
+const jobCard = `
+<div class="job-card">
+<div class="job-title">${job.title}</div>
+<p><b>Company:</b> ${job.company}</p>
+<p><b>Location:</b> ${job.location}</p>
+<a class="apply-link" href="${job.link}" target="_blank">Apply</a>
+</div>
+`
+
+jobsDiv.innerHTML += jobCard
+
+})
+
+}catch(error){
+
+loading.innerHTML=""
+jobsDiv.innerHTML="Error loading jobs. Make sure Flask API is running."
+
+}
+
+}
+
 </script>
 
 </body>
